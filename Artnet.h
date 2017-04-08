@@ -30,6 +30,9 @@ THE SOFTWARE.
 #if defined(ARDUINO_SAMD_ZERO)
     #include <WiFi101.h>
     #include <WiFiUdp.h>
+#elif defined(ESP8266)
+    #include <WiFiUdp.h>
+    #include <ESP8266WiFi.h>
 #else
     #include <Ethernet.h>
     #include <EthernetUdp.h>
@@ -41,7 +44,7 @@ THE SOFTWARE.
 #define ART_POLL 0x2000
 #define ART_DMX 0x5000
 // Buffers
-#define MAX_BUFFER_ARTNET 530
+#define MAX_BUFFER_ARTNET 1024
 // Packet
 #define ART_NET_ID "Art-Net\0"
 #define ART_DMX_START 18
@@ -89,7 +92,7 @@ public:
   }
 
 private:
-  #if defined(ARDUINO_SAMD_ZERO)
+  #if defined(ARDUINO_SAMD_ZERO) || defined(ESP8266)
     WiFiUDP Udp;
   #else
     EthernetUDP Udp;
